@@ -66,7 +66,7 @@ func main() {
 		} else if len(Selection) == 1 {
 			// Artist selection
 			for _, Track := range Tracks {
-				if strings.EqualFold(Track["AlbumArtist"], Selection[0]) {
+				if Track["AlbumArtist"] == Selection[0] {
 					if Added {
 						CommandList.AddId(Track["file"], -1)
 					} else {
@@ -79,8 +79,8 @@ func main() {
 		} else if len(Selection) == 2 {
 			// Album selection
 			for _, Track := range Tracks {
-				if strings.EqualFold(Track["AlbumArtist"], Selection[0]) &&
-					strings.EqualFold(Track["Album"], Selection[1]) {
+				if Track["AlbumArtist"] == Selection[0] &&
+					Track["Album"] == Selection[1] {
 					if Added {
 						CommandList.AddId(Track["file"], -1)
 					} else {
@@ -92,9 +92,9 @@ func main() {
 		} else if len(Selection) == 3 {
 			// Track selection
 			for _, Track := range Tracks {
-				if strings.EqualFold(Track["AlbumArtist"], Selection[0]) &&
-					strings.EqualFold(Track["Album"], Selection[1]) &&
-					strings.EqualFold(Track["Title"], Selection[2]) {
+				if Track["AlbumArtist"] == Selection[0] &&
+					Track["Album"] == Selection[1] &&
+					Track["Title"] == Selection[2] {
 					ID = CommandList.AddId(Track["file"], -1)
 				}
 			}
@@ -112,7 +112,7 @@ func main() {
 
 func contains(s []string, e string) bool {
 	for _, a := range s {
-		if strings.Compare(a, e) == 0 {
+		if a == e {
 			return true
 		}
 	}

@@ -62,7 +62,6 @@ func main() {
 		Selection := strings.Split(scanner.Text(), Seperator)
 		if len(Selection) == 0 {
 			// No selection
-			os.Exit(0)
 		} else if len(Selection) == 1 {
 			// Artist selection
 			for _, Track := range Tracks {
@@ -100,13 +99,15 @@ func main() {
 			}
 		} else {
 			// ???
-			os.Exit(1)
 		}
 		CommandList.End()
 	}
 
-	id, err := ID.Value()
-	orPanic(err)
+	if err == nil {
+		os.Exit(0)
+	}
+
+	id, _ := ID.Value()
 	client.PlayId(id)
 }
 

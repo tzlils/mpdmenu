@@ -1,4 +1,4 @@
-module sr.ht/~tzlil/mpdmenu
+module git.sr.ht/~tzlil/mpdmenu
 
 go 1.15
 

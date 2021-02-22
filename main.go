@@ -109,6 +109,16 @@ func main() {
 
 	id, _ := ID.Value()
 	client.PlayId(id)
+	client.Pause(false)
+}
+
+func contains(s []string, e string) bool {
+	for _, a := range s {
+		if a == e {
+			return true
+		}
+	}
+	return false
 }
 
 func orPanic(err error) {

@@ -111,24 +111,6 @@ func main() {
 	client.PlayId(id)
 }
 
-func contains(s []string, e string) bool {
-	for _, a := range s {
-		if a == e {
-			return true
-		}
-	}
-	return false
-}
-
-func uniq(in []string) (out []string) {
-	for _, e := range in {
-		if !contains(out, e) {
-			out = append(out, e)
-		}
-	}
-	return
-}
-
 func orPanic(err error) {
 	if err != nil {
 		panic(err)

@@ -6,7 +6,7 @@ import (
 	"io"
 	"os/exec"
 	"strings"
-
+	"os"
 	"github.com/fhs/gompd/mpd"
 )
 
@@ -17,6 +17,7 @@ const (
 )
 
 func main() {
+	println("test")
 	client, err := mpd.Dial("tcp", "localhost:6600")
 	if err != nil {
 		panic(err)
@@ -67,11 +68,23 @@ func main() {
 		}
 	}
 
-	subProcess := exec.Command("rofi", "-dmenu", "-p", "Name", "-i")
-	stdin, _ := subProcess.StdinPipe()
-	stdout, _ := subProcess.StdoutPipe()
+	cmd := exec.Command("wofi", "--show", "dmenu", "-p", "Name", "-i")
+	stdin, err := cmd.StdinPipe()
+	if err != nil {
+		panic(err)
+	}
+
+	stdout, err := cmd.StdoutPipe()
+	if err != nil {
+		panic(err)
+	}
+
 	scanner := bufio.NewScanner(stdout)
-	subProcess.Start()
+	err = cmd.Run()
+	if err != nil {
+		panic(err)
+	}
+
 	for _, line := range lines {
 		io.WriteString(stdin, line+"\n")
 	}
@@ -140,49 +153,3 @@ func contains(s []string, e string) bool {
 	}
 	return false
 }
-
-func GetBaseFile(in string) string {
-	paths := strings.Split(in, "/")
-	return paths[len(paths)-1]
-}
-
-/*
-
-	if len(Selection) == 1 {
-		// Artist selection
-		for _, Track := range Tracks {
-			if Track["AlbumArtist"] == Selection[0] {
-				if Added {
-					CommandList.AddId(Track["file"], -1)
-				} else {
-					Added = true
-					ID = CommandList.AddId(Track["file"], -1)
-				}
-
-			}
-		}
-	} else if len(Selection) == 2 {
-		// Album selection
-		for _, Track := range Tracks {
-			if Track["AlbumArtist"] == Selection[0] &&
-				Track["Album"] == Selection[1] {
-				if Added {
-					CommandList.AddId(Track["file"], -1)
-				} else {
-					ID = CommandList.AddId(Track["file"], -1)
-					Added = true
-				}
-			}
-		}
-	} else if len(Selection) == 3 {
-		// Track selection
-		for _, Track := range Tracks {
-			if (Track["AlbumArtist"] == Selection[0] ||
-				Track["Artist"] == Selection[0]) &&
-				Track["Album"] == Selection[1] &&
-				Track["Title"] == Selection[2] {
-				ID = CommandList.AddId(Track["file"], -1)
-			}
-		}
-	}
-*/
